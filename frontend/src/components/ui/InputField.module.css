@@ -1,0 +1,76 @@
+.field {
+  display: grid;
+  gap: 8px;
+  border-radius: 12px;
+  transition: box-shadow 300ms ease;
+}
+
+.label {
+  color: var(--color-on-surface-variant);
+  font-family: var(--font-label);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  line-height: 1.4;
+  text-transform: capitalize;
+  transition:
+    color 300ms ease,
+    transform 300ms ease;
+}
+
+.inputWrap {
+  position: relative;
+}
+
+.input {
+  width: 100%;
+  border: 1px solid rgba(59, 73, 76, 0.3);
+  border-radius: 12px;
+  background: rgba(22, 29, 31, 0.5);
+  color: var(--color-on-surface);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.5;
+  outline: none;
+  padding: 16px 52px 16px 16px;
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    background-color 180ms ease;
+}
+
+.input::placeholder {
+  color: rgba(186, 201, 205, 0.2);
+}
+
+.input:focus {
+  border-color: var(--color-primary-container);
+  background: rgba(22, 29, 31, 0.68);
+  box-shadow:
+    0 0 0 2px rgba(0, 224, 255, 0.22),
+    0 0 15px rgba(0, 224, 255, 0.15);
+}
+
+.icon {
+  position: absolute;
+  top: 50%;
+  right: 16px;
+  color: rgba(186, 201, 205, 0.4);
+  font-size: 22px;
+  line-height: 1;
+  pointer-events: none;
+  transform: translateY(-50%);
+  transition:
+    color 300ms ease,
+    transform 300ms ease;
+}
+
+.field:focus-within .label {
+  color: var(--color-primary-container);
+  transform: translateX(4px);
+}
+
+.field:focus-within .icon {
+  color: var(--color-primary-container);
+  transform: translate(4px, -50%);
+}

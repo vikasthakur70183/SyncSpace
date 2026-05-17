@@ -1,0 +1,54 @@
+@import url("https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&family=Sora:wght@400;600;700;800&display=swap");
+
+:root {
+  --color-surface: #0d1516;
+  --color-surface-container-lowest: #080f11;
+  --color-surface-container-low: #161d1f;
+  --color-surface-container: #1a2123;
+  --color-on-surface: #dce4e6;
+  --color-on-surface-variant: #bac9cd;
+  --color-outline: #859397;
+  --color-outline-variant: #3b494c;
+  --color-primary: #baf2ff;
+  --color-on-primary: #00363f;
+  --color-on-primary-container: #001f25;
+  --color-primary-container: #00e0ff;
+  --color-secondary: #ffb3b0;
+  --color-secondary-container: #901822;
+  --color-tertiary: #ffe5bc;
+  --color-background: #0d1516;
+  --font-heading: "Sora", system-ui, sans-serif;
+  --font-body: "Hanken Grotesk", system-ui, sans-serif;
+  --font-label: "JetBrains Mono", ui-monospace, monospace;
+  color: var(--color-on-surface);
+  background: var(--color-background);
+  font-family: var(--font-body);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-width: 320px;
+  background: var(--color-background);
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+#root {
+  min-height: 100vh;
+}

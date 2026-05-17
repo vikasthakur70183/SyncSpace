@@ -3,8 +3,7 @@ import "./index.css";
 import App from "./App.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router";
 
-//auth pages imports
-import RegisterPage from "./pages/register/registerPage.jsx";
+import RegisterPage from "./pages/register/RegisterPage.jsx";
 import LoginPage from "./pages/login/LoginPage.jsx";
 
 

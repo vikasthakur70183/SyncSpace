@@ -1,0 +1,47 @@
+.form {
+  display: grid;
+  gap: 26px;
+}
+
+.fields {
+  display: grid;
+  gap: 24px;
+}
+
+.ctaWrap {
+  padding-top: 8px;
+}
+
+.consent {
+  align-items: flex-start;
+  color: var(--color-on-surface-variant);
+  cursor: pointer;
+  display: grid;
+  font-family: var(--font-body);
+  font-size: 12px;
+  gap: 12px;
+  grid-template-columns: 20px 1fr;
+  line-height: 1.5;
+  margin-top: 2px;
+  transition: color 200ms ease;
+}
+
+.consent:hover {
+  color: var(--color-on-surface);
+}
+
+.checkbox {
+  accent-color: var(--color-primary-container);
+  block-size: 20px;
+  inline-size: 20px;
+  margin: 1px 0 0;
+}
+
+.consent a {
+  color: var(--color-primary-container);
+  text-decoration: none;
+}
+
+.consent a:hover {
+  text-decoration: underline;
+}
