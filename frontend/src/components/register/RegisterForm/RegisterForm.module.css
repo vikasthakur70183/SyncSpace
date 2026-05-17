@@ -45,3 +45,27 @@
 .consent a:hover {
   text-decoration: underline;
 }
+
+@media (min-width: 1025px) {
+  .form {
+    gap: 17px;
+  }
+
+  .fields {
+    gap: 14px;
+  }
+
+  .ctaWrap {
+    padding-top: 2px;
+  }
+}
+
+@media (min-width: 1025px) and (max-height: 720px) {
+  .form {
+    gap: 14px;
+  }
+
+  .fields {
+    gap: 11px;
+  }
+}

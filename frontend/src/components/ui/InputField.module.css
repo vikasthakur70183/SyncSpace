@@ -74,3 +74,25 @@
   color: var(--color-primary-container);
   transform: translate(4px, -50%);
 }
+
+@media (min-width: 1025px) {
+  .field {
+    gap: 6px;
+  }
+
+  .label {
+    font-size: 12px;
+  }
+
+  .input {
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+}
+
+@media (min-width: 1025px) and (max-height: 720px) {
+  .input {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+}
