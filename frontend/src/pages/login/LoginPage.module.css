@@ -202,7 +202,6 @@
 }
 
 .formLoading {
-  opacity: 0.6;
   pointer-events: none;
 }
 
@@ -269,6 +268,17 @@
   padding: 12px 16px 12px 40px;
 }
 
+.errorMessage {
+  margin: -8px 0 0;
+  border: 1px solid rgba(255, 179, 176, 0.34);
+  border-radius: 8px;
+  background: rgba(144, 24, 34, 0.22);
+  color: var(--color-secondary);
+  font-size: 14px;
+  line-height: 1.5;
+  padding: 10px 12px;
+}
+
 .keepSignedIn {
   display: flex;
   align-items: center;
@@ -299,6 +309,7 @@
 .processingButton {
   display: flex;
   width: 100%;
+  min-height: 55px;
   align-items: center;
   justify-content: center;
   gap: 12px;
@@ -307,7 +318,7 @@
   background: var(--color-primary-container);
   box-shadow: 0 16px 34px rgba(186, 242, 255, 0.1);
   color: var(--color-on-primary-container);
-  cursor: wait;
+  cursor: pointer;
   font-family: var(--font-heading);
   font-size: 16px;
   font-weight: 600;
@@ -329,11 +340,15 @@
 }
 
 .processingButton:disabled {
-  opacity: 1;
+  cursor: not-allowed;
+  opacity: 0.62;
 }
 
 .isLoading {
+  opacity: 1;
   cursor: wait;
+  pointer-events: none;
+  box-shadow: 0 0 24px rgba(0, 218, 248, 0.24);
 }
 
 .spinner {
@@ -432,10 +447,15 @@
   text-align: center;
 }
 
-.invitePrompt span {
+.invitePrompt a {
   color: var(--color-primary-container);
-  cursor: not-allowed;
   font-weight: 700;
+  text-decoration: none;
+}
+
+.invitePrompt a:hover {
+  color: var(--color-primary);
+  text-decoration: underline;
 }
 
 .statusPills {

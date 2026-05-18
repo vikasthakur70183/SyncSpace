@@ -1,0 +1,67 @@
+.layout {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 15% 10%, rgba(0, 224, 255, 0.18), transparent 28rem),
+    radial-gradient(circle at 85% 0%, rgba(255, 179, 176, 0.14), transparent 24rem),
+    var(--color-background);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 4.5rem;
+  padding: 1rem clamp(1rem, 3vw, 2.5rem);
+  border-bottom: 1px solid rgba(186, 201, 205, 0.14);
+  background: rgba(8, 15, 17, 0.78);
+  backdrop-filter: blur(18px);
+}
+
+.brand,
+.account {
+  display: flex;
+  align-items: center;
+}
+
+.brand {
+  gap: 0.65rem;
+  color: var(--color-primary);
+  font-family: var(--font-heading);
+  font-weight: 800;
+}
+
+.account {
+  gap: 0.8rem;
+  color: var(--color-on-surface-variant);
+  font-size: 0.95rem;
+}
+
+.logoutButton {
+  display: inline-grid;
+  width: 2.5rem;
+  height: 2.5rem;
+  place-items: center;
+  border: 1px solid rgba(186, 201, 205, 0.2);
+  border-radius: 0.5rem;
+  color: var(--color-on-surface);
+  background: rgba(26, 33, 35, 0.84);
+  cursor: pointer;
+}
+
+.logoutButton:hover {
+  border-color: rgba(186, 242, 255, 0.55);
+  color: var(--color-primary);
+}
+
+@media (max-width: 640px) {
+  .header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .account {
+    justify-content: space-between;
+    width: 100%;
+  }
+}

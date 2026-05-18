@@ -1,12 +1,39 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useLocation, useNavigate } from "react-router";
+import { loginUser, selectAuth } from "../../store/authSlice";
 import styles from "./LoginPage.module.css";
 
 function LoginPage() {
-  const [isSigningIn, setIsSigningIn] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { error, isAuthenticated, status } = useSelector(selectAuth);
+  const [credentials, setCredentials] = useState({
+    email: "alex.rivera@syncspace.io",
+    password: "",
+  });
+
+  const isSigningIn = status === "loading";
+  const redirectTo = location.state?.from?.pathname || "/dashboard";
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate(redirectTo, { replace: true });
+    }
+  }, [isAuthenticated, navigate, redirectTo]);
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setCredentials((currentCredentials) => ({
+      ...currentCredentials,
+      [name]: value,
+    }));
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    setIsSigningIn(true);
+    dispatch(loginUser(credentials));
   };
 
   return (
@@ -63,9 +90,12 @@ function LoginPage() {
                   <input
                     className={styles.input}
                     id="email"
+                    name="email"
+                    onChange={handleChange}
                     readOnly={isSigningIn}
+                    required
                     type="email"
-                    value="alex.rivera@syncspace.io"
+                    value={credentials.email}
                   />
                 </div>
               </div>
@@ -84,12 +114,17 @@ function LoginPage() {
                   <input
                     className={styles.input}
                     id="password"
+                    name="password"
+                    onChange={handleChange}
+                    placeholder="Enter your password"
                     readOnly={isSigningIn}
+                    required
                     type="password"
-                    value="••••••••••••"
+                    value={credentials.password}
                   />
                 </div>
               </div>
+              {error ? <p className={styles.errorMessage}>{error}</p> : null}
 
               <div className={styles.keepSignedIn}>
                 <span className={styles.checkBox}>
@@ -101,8 +136,9 @@ function LoginPage() {
               </div>
               <button
                 className={`${styles.processingButton} ${isSigningIn ? styles.isLoading : ""}`}
-                disabled={isSigningIn}
+                disabled={isSigningIn || !credentials.email || !credentials.password}
                 type="submit"
+                aria-busy={isSigningIn}
               >
                 {isSigningIn ? <span className={styles.spinner} aria-hidden="true" /> : null}
                 <span>{isSigningIn ? "Signing in..." : "Sign In"}</span>
@@ -138,7 +174,7 @@ function LoginPage() {
             </div>
 
             <p className={styles.invitePrompt}>
-              Don&apos;t have an account? <span>Get invited</span>
+              Don&apos;t have an account? <Link to="/">Sign up and register</Link>
             </p>
           </div>
         </section>

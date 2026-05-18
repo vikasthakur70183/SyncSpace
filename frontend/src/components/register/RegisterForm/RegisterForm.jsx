@@ -23,6 +23,7 @@ function RegisterForm() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    console.log("Form submitted with data:", formData);
     setFormData(initialFormState);
   };
 
