@@ -3,59 +3,86 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
 const authController = {
-  register: async function name(req, res) {
-    // Registration logic here
+  register: async function (req, res) {
+    try {
+      const { username, email, password } = req.body;
 
-    const { username, email, password } = req.body; // Assuming user data is sent in the request body getting this data from the request body
-    console.log(req.body);
-    if (!username || !email || !password) {
-      return res
-        .status(400)
-        .json("All fields are required {username, email, password}");
-    } //checking if all required fields are provided
+      if (!username || !email || !password) {
+        return res
+          .status(400)
+          .json({ message: "All fields are required {username, email, password}" });
+      }
 
-    const existinguser = await User.findOne({ email }); //checking if user with the same email already exists
-    if (existinguser) {
-      return res.status(400).json("User already exists");
+      const existingUser = await User.findOne({ email });
+      if (existingUser) {
+        return res.status(409).json({ message: "User already exists" });
+      }
+
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(password, salt);
+
+      const newUser = new User({ username, email, password: hashedPassword });
+      const savedUser = await newUser.save();
+
+      return res.status(201).json({
+        success: true,
+        message: "User registered successfully",
+        user: {
+          id: savedUser._id,
+          username: savedUser.username,
+          email: savedUser.email,
+        },
+      });
+    } catch (error) {
+      console.error("Registration error:", error);
+      return res.status(500).json({ message: "Unable to register user" });
     }
-
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt); //hashing the password before saving to the database
-
-    const newUser = new User({ username, email, password: hashedPassword });
-    const savedUser = await newUser.save();
-    return res.status(200).json({
-      success: true,
-      message: "User registered successfully",
-      savedUser,
-    });
   },
   login: async function (req, res) {
-    // Login logic here
+    try {
+      const { email, password } = req.body;
 
-    const { email, password } = req.body; // Assuming login credentials are sent in the request body
+      if (!email || !password) {
+        return res.status(400).json({ message: "All fields are required {email, password}" });
+      }
 
-    if (!email || !password) {
-      return res.status(400).json("All fields are required {email, password}");
-    } //checking if all required fields are provided
+      const user = await User.findOne({ email });
+      if (!user) {
+        return res.status(401).json({ message: "Invalid email or password" });
+      }
 
-    const user = await User.findOne({ email }); //checking if user with the provided email exists
-    if (!user) {
-      return res.status(400).json("Invalid email or password");
+      const isPasswordValid = await bcrypt.compare(password, user.password);
+      if (!isPasswordValid) {
+        return res.status(401).json({ message: "Invalid email or password" });
+      }
+
+      if (!process.env.JWT_SECRET) {
+        console.error("JWT_SECRET is missing from environment variables");
+        return res.status(500).json({ message: "Authentication is not configured" });
+      }
+
+      const tokenData = {
+        id: user._id,
+        email: user.email,
+      };
+
+      const token = jwt.sign(tokenData, process.env.JWT_SECRET, {
+        expiresIn: "8h",
+      });
+
+      return res.json({
+        token,
+        message: "Login successful",
+        user: {
+          id: user._id,
+          username: user.username,
+          email: user.email,
+        },
+      });
+    } catch (error) {
+      console.error("Login error:", error);
+      return res.status(500).json({ message: "Unable to login" });
     }
-    const isPasswordValid = await bcrypt.compare(password, user.password); //comparing the provided password with the hashed password in the database
-    if (!isPasswordValid) {
-      return res.status(400).json("Invalid email or password");
-    }
-    const TokenData = {
-      id: user._id,
-      email: user.email,
-    }; //creating a payload for the JWT token
-
-    const token = jwt.sign(TokenData, process.env.JWT_SECRET, {
-      expiresIn: "8h",
-    }); //signing the JWT token with a secret key and setting an expiration time
-    return res.json({ token, message: "Login successful" });
   },
 };
 

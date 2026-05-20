@@ -1,6 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { AuthApi } from "../Api/Auth";
 
 const AUTH_STORAGE_KEY = "syncspace.auth";
+const authApi = new AuthApi();
 
 const decodeTokenPayload = (token) => {
   try {
@@ -38,21 +40,7 @@ export const loginUser = createAsyncThunk(
   "auth/loginUser",
   async ({ email, password }, { rejectWithValue }) => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL ?? ""}/api/auth/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
-
-      const data = await response.json().catch(() => null);
-
-      if (!response.ok) {
-        return rejectWithValue(
-          typeof data === "string" ? data : data?.message || "Unable to sign in.",
-        );
-      }
+      const data = await authApi.login({ email, password });
 
       if (!data?.token) {
         return rejectWithValue("Login succeeded but no token was returned.");
@@ -67,8 +55,8 @@ export const loginUser = createAsyncThunk(
           email: tokenUser?.email || email,
         },
       };
-    } catch {
-      return rejectWithValue("Unable to reach the auth server.");
+    } catch (error) {
+      return rejectWithValue(error.message || "Unable to sign in.");
     }
   },
 );

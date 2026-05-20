@@ -12,6 +12,26 @@
   padding-top: 8px;
 }
 
+.errorMessage,
+.successMessage {
+  border-radius: 10px;
+  font-family: var(--font-body);
+  font-size: 13px;
+  line-height: 1.45;
+  margin: -6px 0 0;
+  padding: 10px 12px;
+}
+
+.errorMessage {
+  background: rgba(255, 88, 88, 0.12);
+  color: #ffb4ab;
+}
+
+.successMessage {
+  background: rgba(65, 214, 165, 0.12);
+  color: #8ff0c8;
+}
+
 .consent {
   align-items: flex-start;
   color: var(--color-on-surface-variant);
